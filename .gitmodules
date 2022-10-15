@@ -1,0 +1,3 @@
+[submodule "handlebars.js"]
+	path = handlebars.js
+	url = https://gist.github.com/cd0438508a0127af9b9f86a2a34623e5.git

@@ -2,7 +2,7 @@
  * @author <code@tythos.net>
  */
 
-import handlebars from "../handlebars.js/dist/handlebars.esm.js";
+import handlebars from "../handlebars.js/handlebars.esm.js";
 
 const TEMPLATE = handlebars.compile(`<div class="{{myclass}}"/>`);
 
