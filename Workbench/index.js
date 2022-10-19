@@ -4,13 +4,8 @@
 
 import handlebars from "../handlebars.js/handlebars.esm.js";
 
-const TEMPLATE = handlebars.compile(`<div class="{{myclass}}"/>`);
-
-function graft(parent, template, params) {
-    let div = window.document.createElement("div");
-    div.innerHTML = template(params);
-    Array.from(div.children).forEach(ch => parent.appendChild(ch));
-}
+const HBSPATH = import.meta.url.replace(/\.js$/, ".hbs");
+const CSSPATH = import.meta.url.replace(/\.js$/, ".css");
 
 /**
  * Instantiating a workbench provides UI-driven controls over window layout.
@@ -26,13 +21,42 @@ function graft(parent, template, params) {
  * 
  * * Close (opposing window will merge into joint space)
  * 
- * The "Workbench" instance actually handles 
+ * The "Workbench" instance actually handles a node level recursively.
  */
 class Workbench {
-    constructor(parent=window.document.body) {
-        graft(parent, TEMPLATE, {
-            "myclass": "MyClass"
-        });
+    constructor(parent=null, onSuccess=null) {
+        if (parent === null) {
+            parent = window.document.body;
+        }
+        this.subdom = window.document.createElement("div");
+        this.stylesheet = (href => {
+            let head = window.document.head;
+            let linki = head.querySelectorAll("link");
+            for (let i = 0; i < linki.length; i++) {
+                let link = linki[i];
+                if (link.href === href) {
+                    return link;
+                }
+            }
+            let link = window.document.createElement("link");
+            link.href = href;
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            head.appendChild(link);
+            return link;
+        })(CSSPATH);
+        parent.appendChild(this.subdom);
+        fetch(HBSPATH)
+            .then(response => response.text())
+            .then(text => handlebars.compile(text))
+            .then(generator => {
+                this.subdom.innerHTML = generator({
+                    "myclass": "MyClass"
+                });
+                if (onSuccess !== null) {
+                    onSuccess(this);
+                }
+            });
     }
 }
 
