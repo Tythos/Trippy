@@ -1,6 +1,10 @@
 # trippy
 
-Boilerplate for forking minimal webapps. Largely intended as a not-quite-dropin replacement for React without the build, abstraction, or other overhead. Reusable "component"-like elements ("triplets") are defined by at least three resources:
+See the test demo project for how Trippy can be utilized:
+
+  https://github.com/Tythos/trippy-testdemo.git
+
+Trippy provides a boilerplate for forking minimal webapps. Largely intended as a not-quite-dropin replacement for React without the build, abstraction, or other overhead. Reusable "component"-like elements ("triplets") are defined by at least three resources:
 
 * A .CSS file that is asserted for attachment once
 
