@@ -1,4 +1,4 @@
-# trippy
+# Trippy
 
 See the test demo project for how Trippy can be utilized:
 
